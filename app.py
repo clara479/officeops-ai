@@ -79,3 +79,27 @@ if st.session_state.inventory:
                 st.write(f"• Reorder `{row['Item']}` — current status: {row['Status']}")
         else:
             st.success("✅ All items are well stocked!")
+
+
+
+# --- Smarter AI Assistant for Reorders ---
+if st.button("🤖 Suggest Reorders"):
+    restock = edited_df[edited_df["Status"].isin(["Low", "Out of Stock"])]
+    if not restock.empty:
+        st.info("🔁 Smart Reorder Suggestions:")
+        for _, row in restock.iterrows():
+            current_qty = row['Quantity']
+            item = row['Item']
+            status = row['Status']
+            
+            # Estimate reorder quantity (basic logic based on status)
+            if status == "Out of Stock":
+                suggested_reorder = "10 units"
+            elif status == "Low":
+                suggested_reorder = "enough to bring stock to 10 units"
+            else:
+                suggested_reorder = "N/A"
+
+            st.write(f"• `{item}` is `{status}` → 📦 Reorder: **{suggested_reorder}** (current: `{current_qty}`)")
+    else:
+        st.success("✅ All items are well stocked!")
