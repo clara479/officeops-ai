@@ -52,7 +52,7 @@ if "inventory" not in st.session_state:
     st.session_state.inventory = []
 
 # --- Form to Add New Items ---
-with st.form("inventory_form"):
+with st.form("inventory_add_form"):
     item_name = st.text_input("Ingredient / Item Name")
     quantity = st.text_input("Quantity (e.g. '2kg', '10 packs')")
     category = st.selectbox("Category", ["Fresh", "Dry", "Frozen", "Other"])
